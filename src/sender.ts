@@ -46,7 +46,7 @@ export default class ZabbixSender implements ZabbixSenderRequestBasics {
       this._timestamps = true;
     }
   }
-  
+
   public add(data: ZabbixSenderItem): ZabbixSenderRequest;
   public add(key: string, value: number): ZabbixSenderRequest;
   public add(
@@ -87,7 +87,7 @@ export default class ZabbixSender implements ZabbixSenderRequestBasics {
       hostname as any
     );
   }
-  
+
   public send(data: ZabbixSenderItem): Promise<ZabbixSenderResponse>;
   public send(key: string, value: number): Promise<ZabbixSenderResponse>;
   public send(
@@ -130,18 +130,6 @@ export default class ZabbixSender implements ZabbixSenderRequestBasics {
       )
       .send();
   }
-}
-
-export interface ZabbixSenderItem {
-  host: string;
-  key: string;
-  value: number;
-  clock?: number;
-  ns?: number;
-}
-export interface ZabbixSenderResponse {
-  response: string;
-  info: string;
 }
 
 class ZabbixSenderRequest implements ZabbixSenderRequestBasics {
@@ -320,4 +308,17 @@ export interface ZabbixSenderRequestBasics {
     ns?: number | string,
     hostname?: string
   ): ZabbixSenderRequest;
+}
+
+export interface ZabbixSenderItem {
+  host: string;
+  key: string;
+  value: number;
+  clock?: number;
+  ns?: number;
+}
+
+export interface ZabbixSenderResponse {
+  response: string;
+  info: string;
 }
