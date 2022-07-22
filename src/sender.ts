@@ -1,7 +1,7 @@
 import { Socket } from "net";
 import { hostname as hostnameF } from "os";
 
-export default class ZabbixSender implements ZabbixSenderRequestBasics {
+export default class ZabbixSender implements ZabbixSenderRequestBasics { 
   private _hostname: string = "localhost";
   public get hostname(): string {
     return this._hostname;
