@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  create:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    #strategy:
+    #  matrix:
+    #    node-version: [16.x]
+    #    # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\v//}
+
+    - uses: ncipollo/release-action@v1
+      with:
+        tag: "${{ github.ref }}"
+        name: "v${{ steps.get_version.output.VERSION }}"
+        body: "See release: https://www.npmjs.com/package/@bettercorp/node-zabbix-sender/v/${{ steps.get_version.output.VERSION }}"
+        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+

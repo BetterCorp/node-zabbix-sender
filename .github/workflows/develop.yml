@@ -3,7 +3,7 @@ name: Pre-Release Publish
 on:
   push:
     branches:
-      - 'master'
+      - 'develop'
 
 jobs:
   build:
@@ -30,18 +30,13 @@ jobs:
       uses: paulhatch/semantic-version@v4.0.2
       with:
         tag_prefix: "v"
-        branch: master
+        branch: develop
         major_pattern: "(MAJOR)"
         minor_pattern: "(MINOR)"
         format: "${major}.${minor}.${patch}-beta${increment}"
         change_path: "src/"
         bump_each_commit: true
         namespace: ""
-    - run: |
-        echo "NO CHANGES FOUND";
-        exit 1
-      if: ${{ steps.semver.outputs.changed == 'false' }}
-
     - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM2_TOKEN_PUB }}" > ./.npmrc
     - run: |
         git config user.name "GitHub Actions Bot";
@@ -53,15 +48,7 @@ jobs:
       run: |
         echo "Setting version too: ${{ steps.semver.outputs.version }}";
     - run: npm version ${{ steps.semver.outputs.version }}
-    - run: npm config set sign-git-tag true
     - run: npm publish
-
-    - name: Push tag
-      id: tag_version
-      uses: mathieudutour/github-tag-action@v6.0
-      with:
-        custom_tag: v${{ steps.semver.outputs.version }}
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: cleanup
       if: always()
