@@ -1,7 +1,7 @@
 {
   "name": "@bettercorp/node-zabbix-sender",
   "version": "2.0.0",
-  "description": "A zabbix_sender implementation, to send zabbix item(s) using the zabbix trapper protocol in Typescript.",
+  "description": "A zabbix_sender implementation, to send zabbix item(s) using the zabbix trapper protocol in NodeJS/Typescript.",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc"
