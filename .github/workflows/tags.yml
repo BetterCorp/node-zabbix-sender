@@ -1,9 +1,9 @@
-name: Publish
+name: Create Release
 
 on:
   create:
     tags:
-      - 'v*'
+      - v**
 
 jobs:
   build:

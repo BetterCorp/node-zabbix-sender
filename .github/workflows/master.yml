@@ -1,4 +1,4 @@
-name: Pre-Release Publish
+name: Tag live
 
 on:
   push:
@@ -60,7 +60,7 @@ jobs:
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.0
       with:
-        custom_tag: v${{ steps.semver.outputs.version }}
+        custom_tag: ${{ steps.semver.outputs.version }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: cleanup
