@@ -50,6 +50,21 @@ jobs:
     - run: npm version ${{ steps.semver.outputs.version }}
     - run: npm config set sign-git-tag true
     - run: npm publish
+    
+    - uses: actions-ecosystem/action-push-tag@v1
+      if: ${{ steps.semver.outputs.changed == 'true' }}
+      with:
+        tag: "v${{ steps.semver.outputs.version }}"
+        message: "v${{ steps.semver.outputs.version }}"
+    - uses: actions/create-release@v1
+      if: ${{ steps.semver.outputs.changed == 'true' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: "v${{ steps.semver.outputs.version }}"
+        release_name: "v${{ steps.semver.outputs.version }}"
+        body: ${{ steps.regex-match.outputs.group1 }}
+
     - name: cleanup
       if: always()
       run: rm -f ~/.npmrc ; rm -f ./.npmrc;
