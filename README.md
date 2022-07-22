@@ -4,7 +4,7 @@ The library is an implementation of `zabbix_sender` utility, which sends items d
 using the zabbix `trapper` protocol. Because the library is a pure Node.js/Typescript implementation, it doesn't
 require invocation of `zabbix_sender` utility. So there is no any `child_process` involved!
 
-### Basic usage example
+### Basic usage example 
 
 ```typescript
 import { ZabbixSender } from '@bettercorp/node-zabbix-sender'

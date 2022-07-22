@@ -34,7 +34,6 @@ jobs:
         format: "${major}.${minor}.${patch}"
         change_path: "src/"
         bump_each_commit: false
-        search_commit_body: false
     - run: npm run build
     # - run: npm test
     - run: npm version version ${version}
