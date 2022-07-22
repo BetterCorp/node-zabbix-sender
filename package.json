@@ -1,24 +1,37 @@
 {
-  "name": "node-zabbix-sender",
-  "version": "1.1.0",
-  "description": "A zabbix_sender implementation, to send zabbix item(s) using the zabbix trapper protocol.",
-  "main": "index.js",
+  "name": "@bettercorp/node-zabbix-sender",
+  "version": "0.0.1",
+  "description": "A zabbix_sender implementation, to send zabbix item(s) using the zabbix trapper protocol in Typescript.",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shamil/node-zabbix-sender.git"
+    "url": "https://github.com/BetterCorp/node-zabbix-sender.git"
   },
   "keywords": [
     "zabbix",
     "sender",
-    "trapper"
+    "trapper",
+    "typescript"
   ],
-  "author": "Alex Simenduev <shamil.si@gmail.com>",
+  "author": "Mitchell R <support@bettercorp.co.za>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shamil/node-zabbix-sender/issues"
+    "url": "https://github.com/BetterCorp/node-zabbix-sender/issues"
   },
-  "homepage": "https://github.com/shamil/node-zabbix-sender#readme"
+  "homepage": "https://github.com/BetterCorp/node-zabbix-sender",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.20.0",
+    "ts-node": "^10.9.1"
+  }
 }
