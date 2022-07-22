@@ -39,7 +39,7 @@ jobs:
         user_format_type: "csv"
     - run: npm run build
     # - run: npm test
-    - run: npm version version ${version}
+    - run: npm version version ${{ steps.version.outputs.version }}
     - run: npm config set sign-git-tag true
     - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
     - run: npm publish
