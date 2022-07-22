@@ -87,6 +87,7 @@ export default class ZabbixSender implements ZabbixSenderRequestBasics {
       hostname as any
     );
   }
+  
   public send(data: ZabbixSenderItem): Promise<ZabbixSenderResponse>;
   public send(key: string, value: number): Promise<ZabbixSenderResponse>;
   public send(
