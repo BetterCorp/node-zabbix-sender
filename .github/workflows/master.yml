@@ -38,8 +38,10 @@ jobs:
         bump_each_commit: true
         namespace: ""
     - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
-    - run: git config --global user.email "${NPM_EMAIL}"
-    - run: git config --global user.name "${NPM_NAME}"
+    - run: git config user.email "${NPM_EMAIL}"
+    - run: |
+        git config user.name "${NPM_NAME}";
+        echo "Hello $(git config --get user.name)";
     - run: npm run build
     # - run: npm test
     - name: output version
