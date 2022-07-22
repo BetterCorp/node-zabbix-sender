@@ -8,7 +8,7 @@ on:
       - "v*"
   create:
     tags:
-      - v**
+      - "*"
 
 jobs:
   build:
