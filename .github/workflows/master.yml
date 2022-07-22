@@ -42,7 +42,7 @@ jobs:
     - name: output version
       run: |
         echo ::debug::setting version too: ${{ steps.semver.outputs.version }}
-    - run: npm version version ${{ steps.semver.outputs.version }}
+    - run: npm version version --force ${{ steps.semver.outputs.version }}
     - run: npm config set sign-git-tag true
     - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
     - run: npm publish
