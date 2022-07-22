@@ -8,7 +8,11 @@ on:
       - "v*"
   create:
     tags:
-      - "*"
+      - v**
+  workflow_run:
+    workflows: ["Tag live"]
+    types:
+      - completed
 
 jobs:
   build:
