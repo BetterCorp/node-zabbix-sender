@@ -64,7 +64,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - uses: ncipollo/release-action@v1
       with:
-        tag: "v${{ github.ref }}"
+        tag: "v${{ steps.semver.outputs.version }}"
         name: "v${{ steps.semver.outputs.version }}"
         body: "See release: https://www.npmjs.com/package/@bettercorp/node-zabbix-sender/v/${{ steps.semver.outputs.version }}"
         token: ${{ secrets.GITHUB_TOKEN }}
