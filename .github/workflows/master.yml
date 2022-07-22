@@ -44,7 +44,8 @@ jobs:
     # - run: npm test
     - name: output version
       run: |
-        echo ::debug::setting version too: ${{ steps.semver.outputs.version }}
+        echo "Setting version too: ${{ steps.semver.outputs.version }}";
+        echo "Hello $(git config --get user.name)";
     - run: npm version ${{ steps.semver.outputs.version }}
     - run: npm config set sign-git-tag true
     - run: npm publish
