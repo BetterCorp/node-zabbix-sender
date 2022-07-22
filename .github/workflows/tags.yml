@@ -1,6 +1,11 @@
 name: Create Release
 
 on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "v*"
   create:
     tags:
       - v**
@@ -21,7 +26,7 @@ jobs:
         fetch-depth: 0
     - name: Get the version
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\v//}
+      run: echo ::set-output name=VERSION::$($env:GITHUB_REF -replace "refs/tags/v")
 
     - uses: ncipollo/release-action@v1
       with:
