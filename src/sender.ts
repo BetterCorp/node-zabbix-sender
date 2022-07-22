@@ -1,7 +1,7 @@
 import { Socket } from "net";
 import { hostname as hostnameF } from "os";
 
-export default class ZabbixSender implements ZabbixSenderRequestBasics { 
+export default class ZabbixSender implements ZabbixSenderRequestBasics {
   private _hostname: string = "localhost";
   public get hostname(): string {
     return this._hostname;
@@ -181,6 +181,7 @@ class ZabbixSenderRequest implements ZabbixSenderRequestBasics {
   ): ZabbixSenderRequest {
     if (this.closed)
       throw "Data has already been sent. use ZabbixSender.add() to start a new chain.";
+
     if (typeof key === "string") {
       let newItem: ZabbixSenderItem = {
         host: this.sender.hostname,
@@ -218,6 +219,7 @@ class ZabbixSenderRequest implements ZabbixSenderRequestBasics {
   public async send(): Promise<ZabbixSenderResponse> {
     if (this.closed)
       throw "Data has already been sent. use ZabbixSender.add() to start a new chain.";
+
     const self = this,
       client = new Socket();
 
