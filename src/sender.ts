@@ -262,7 +262,7 @@ class ZabbixSenderRequest implements ZabbixSenderRequestBasics {
   }
 
   private prepareData() {
-    var data: any = {
+    let data: any = {
       request: "sender data",
       data: this.listOfItems,
     };
@@ -274,7 +274,7 @@ class ZabbixSenderRequest implements ZabbixSenderRequestBasics {
       data.ns = (data.clock % 1) * 1000 * 1000000;
     }
 
-    var payload = Buffer.from(JSON.stringify(data), "utf8"),
+    let payload = Buffer.from(JSON.stringify(data), "utf8"),
       header = Buffer.alloc(5 + 4); // ZBXD\1 + packed payload.length
 
     header.write("ZBXD\x01");
