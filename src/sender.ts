@@ -46,6 +46,7 @@ export default class ZabbixSender implements ZabbixSenderRequestBasics {
       this._timestamps = true;
     }
   }
+  
   public add(data: ZabbixSenderItem): ZabbixSenderRequest;
   public add(key: string, value: number): ZabbixSenderRequest;
   public add(
