@@ -37,6 +37,9 @@ jobs:
         change_path: "src/"
         bump_each_commit: false
         namespace: ""
+    - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
+    - run: git config --local user.email "${NPM_EMAIL}"
+    - run: git config --local user.name "${NPM_NAME}"
     - run: npm run build
     # - run: npm test
     - name: output version
@@ -44,7 +47,6 @@ jobs:
         echo ::debug::setting version too: ${{ steps.semver.outputs.version }}
     - run: npm version ${{ steps.semver.outputs.version }}
     - run: npm config set sign-git-tag true
-    - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
     - run: npm publish
     - name: cleanup
       if: always()
