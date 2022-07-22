@@ -89,4 +89,4 @@ In case of `error`, the previously added items will be kept, for the next `send`
 
 ### License
 
-Licensed under the MIT License. See the LICENSE file for details.
+Licensed under the MIT License. See the LICENSE file for details.  
