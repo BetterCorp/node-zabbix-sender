@@ -37,7 +37,7 @@ jobs:
         change_path: "src/"
         bump_each_commit: true
         namespace: ""
-    - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${NPM2_TOKEN_PUB}" > ./.npmrc
+    - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=\${{NPM2_TOKEN_PUB}}" > ./.npmrc
     - run: |
         git config user.name "GitHub Actions Bot";
         git config user.email "<>";
