@@ -39,8 +39,8 @@ jobs:
         namespace: ""
     - run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM2_TOKEN_PUB }}" > ./.npmrc
     - run: |
-        git config user.name "GitHub Actions Bot";
-        git config user.email "<>";
+        git config user.name "${{ secrets.NPM_NAME }}";
+        git config user.email "${{ secrets.NPM_EMAIL }}";
         echo "Hello $(git config --get user.name)";
     - run: npm run build
     # - run: npm test
