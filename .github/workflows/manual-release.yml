@@ -1,0 +1,89 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - beta
+        default: 'patch'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+
+    - name: Configure npm authentication
+      run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM2_TOKEN_PUB }}" > ./.npmrc
+
+    - name: Configure git
+      run: |
+        git config user.name "${{ secrets.NPM_NAME }}";
+        git config user.email "${{ secrets.NPM_EMAIL }}";
+        echo "Hello $(git config --get user.name)";
+
+    - run: npm run build
+
+    - name: Get current version
+      id: current_version
+      run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+    - name: Bump version
+      id: bump_version
+      run: |
+        if [ "${{ inputs.version-type }}" == "beta" ]; then
+          # For beta, append -beta.X to current version
+          NEW_VERSION=$(npm version prerelease --preid=beta --no-git-tag-version)
+        else
+          NEW_VERSION=$(npm version ${{ inputs.version-type }} --no-git-tag-version)
+        fi
+        echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+        echo "Bumped from ${{ steps.current_version.outputs.version }} to ${NEW_VERSION}"
+
+    - name: Commit version bump
+      run: |
+        git add package.json
+        git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }}"
+        git push
+
+    - run: npm publish
+
+    - name: Push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.2
+      with:
+        custom_tag: ${{ steps.bump_version.outputs.new_version }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create GitHub Release
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        tag: "v${{ steps.bump_version.outputs.new_version }}"
+        name: "v${{ steps.bump_version.outputs.new_version }}"
+        body: "See release: https://www.npmjs.com/package/@bettercorp/node-zabbix-sender/v/${{ steps.bump_version.outputs.new_version }}"
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Cleanup
+      if: always()
+      run: rm -f ~/.npmrc ; rm -f ./.npmrc;
