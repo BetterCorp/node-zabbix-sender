@@ -37,12 +37,6 @@ jobs:
     - name: Configure npm authentication
       run: rm -f ~/.npmrc ; rm -f ./.npmrc ; echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM2_TOKEN_PUB }}" > ./.npmrc
 
-    - name: Configure git
-      run: |
-        git config user.name "${{ secrets.NPM_NAME }}";
-        git config user.email "${{ secrets.NPM_EMAIL }}";
-        echo "Hello $(git config --get user.name)";
-
     - run: npm run build
 
     - name: Get current version
@@ -60,12 +54,6 @@ jobs:
         fi
         echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
         echo "Bumped from ${{ steps.current_version.outputs.version }} to ${NEW_VERSION}"
-
-    - name: Commit version bump
-      run: |
-        git add package.json
-        git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }}"
-        git push
 
     - run: npm publish
 
